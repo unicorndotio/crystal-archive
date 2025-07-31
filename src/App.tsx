@@ -3,11 +3,11 @@ import { db, type FileRecord } from "./services/database";
 import { searchService } from "./services/searchService";
 import type { SearchResult } from "minisearch";
 import { Header } from "./components/Header";
-import { FileUpload } from "./components/FileUpload";
+import { Welcome } from "./components/Welcome";
 import { SearchBar } from "./components/SearchBar";
 import { SearchResults } from "./components/SearchResults";
-import { PrivacyStatus } from "./components/PrivacyStatus";
 import "./index.css";
+
 const fileProcessorWorker = new Worker("/fileProcessor.worker.ts", { type: "module" });
 
 export function App() {
@@ -108,18 +108,22 @@ export function App() {
   const displayedFiles = searchQuery ? searchResults.map(r => files.find(f => f.id === r.id)).filter(Boolean) as FileRecord[] : files;
 
   return (
-    <div className="max-w-4xl mx-auto p-8 font-sans">
-      <Header />
-      <FileUpload onFileUpload={handleFileUpload} />
-      <SearchBar searchQuery={searchQuery} isIndexing={isIndexing} onSearch={handleSearch} />
-      <SearchResults
-        searchQuery={searchQuery}
-        searchResults={searchResults}
-        displayedFiles={displayedFiles}
-        processingStatus={processingStatus}
-        onDeleteFile={handleDeleteFile}
-      />
-      <PrivacyStatus />
+    <div className="min-h-screen w-full flex items-center justify-center p-4 sm:p-6 lg:p-8">
+      <div className="w-full max-w-5xl flex flex-col space-y-6">
+        <Header onFileUpload={handleFileUpload} />
+        {files.length === 0 ? (
+          <Welcome onFileUpload={handleFileUpload} />
+        ) : (
+          <SearchResults
+            searchQuery={searchQuery}
+            searchResults={searchResults}
+            displayedFiles={displayedFiles}
+            processingStatus={processingStatus}
+            onDeleteFile={handleDeleteFile}
+          />
+        )}
+        <SearchBar searchQuery={searchQuery} isIndexing={isIndexing} onSearch={handleSearch} />
+      </div>
     </div>
   );
 }
