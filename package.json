@@ -10,6 +10,10 @@
   },
   "dependencies": {
     "bun-plugin-tailwind": "^0.0.15",
+    "dexie": "^4.0.11",
+    "mammoth": "^1.9.1",
+    "minisearch": "^7.1.2",
+    "pdfjs-dist": "^5.4.54",
     "react": "^19",
     "react-dom": "^19",
     "tailwindcss": "^4.1.11"
