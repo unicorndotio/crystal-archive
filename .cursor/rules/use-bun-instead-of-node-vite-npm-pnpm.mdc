@@ -1,0 +1,11 @@
+---
+description: Use Bun instead of Node.js, npm, pnpm, or vite.
+globs: "*.ts, *.tsx, *.html, *.css, *.js, *.jsx, package.json"
+alwaysApply: false
+---
+
+Default to using Bun instead of Node.js.
+
+Refer to the detailed guidelines for Bun usage in this project:
+
+@docs/standards/ai-agent-guide.md @docs/standards/bun-guidelines.md
