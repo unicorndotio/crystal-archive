@@ -1,7 +1,8 @@
 # Privacy-First Local File Search - To-Do List
 
 This document outlines the tasks to be completed for the Privacy-First Local
-File Search application, based on the Product Requirements Document (<!-- Import failed: PRD.md). - Only .md files are supported -->
+File Search application, based on the Product Requirements Document
+(<!-- Import failed: PRD.md). - Only .md files are supported -->
 
 ## Core Implementation Tasks
 
@@ -43,3 +44,58 @@ File Search application, based on the Product Requirements Document (<!-- Import
 - [x] Develop `SearchResults` component
 - [x] Develop `PrivacyStatus` component
 
+### PWA Features
+
+- [ ] Implement Service Worker for offline capability
+- [ ] Add PWA manifest for installable experience
+- [ ] Implement offline indicator
+
+## Advanced Features
+
+### Enhanced Privacy Features
+
+#### Advanced File Support
+
+- [ ] OCR for scanned PDFs using Tesseract.js
+- [ ] Excel/CSV processing with client-side libraries
+- [ ] Image text extraction (local OCR)
+- [ ] Encrypted file support with user-provided keys
+
+#### Privacy Enhancements
+
+- [ ] Optional client-side encryption for IndexedDB
+- [ ] Secure file deletion (overwrite storage)
+- [ ] Privacy audit dashboard
+- [ ] Zero-knowledge architecture documentation
+
+### Advanced Search & UX
+
+#### Intelligent Search
+
+- [ ] Semantic search using local word embeddings
+- [ ] Search suggestions based on content
+- [ ] Boolean operators and advanced queries
+- [ ] Search within specific file types or date ranges
+
+#### User Experience
+
+- [ ] File preview without uploading to server
+- [ ] Bulk operations (delete, export)
+- [ ] Search history (stored locally)
+- [ ] Keyboard shortcuts and accessibility
+
+### Performance & Scalability
+
+#### Large File Handling
+
+- [ ] Streaming file processing for large documents
+- [ ] Incremental indexing for better performance
+- [ ] Storage quota management and optimization
+- [ ] Background sync for file processing
+
+#### Advanced PWA Features
+
+- [ ] File association (open files directly in app)
+- [ ] Share target (receive files from other apps)
+- [ ] Background processing with service workers
+- [ ] Push notifications for processing completion
