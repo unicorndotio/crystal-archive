@@ -28,18 +28,15 @@ export function App() {
 
   useEffect(() => {
     const handleWorkerMessage = async (e: MessageEvent) => {
-      const { type, fileId, content, error } = e.data;
-      const file = files.find(f => f.id === fileId);
+      const { type, file, content, error } = e.data;
 
-      if (file) {
-        if (type === "processed") {
-          const updatedFile = { ...file, content };
-          await db.files.update(fileId, { content });
-          await updateFileInStateAndIndex(updatedFile);
-        } else if (type === "error") {
-          console.error(`Error processing file ${fileId}:`, error);
-          setProcessingStatus(prev => ({ ...prev, [fileId]: `Error: ${error}` }));
-        }
+      if (type === "processed") {
+        const updatedFile = { ...file, content };
+        await db.files.update(file.id, { content });
+        await updateFileInStateAndIndex(updatedFile);
+      } else if (type === "error") {
+        console.error(`Error processing file ${file.id}:`, error);
+        setProcessingStatus(prev => ({ ...prev, [file.id]: `Error: ${error}` }));
       }
     };
 
@@ -47,7 +44,7 @@ export function App() {
     return () => {
       fileProcessorWorker.removeEventListener("message", handleWorkerMessage);
     };
-  }, [files, updateFileInStateAndIndex]);
+  }, [updateFileInStateAndIndex]);
 
   const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const uploadedFiles = event.target.files;
@@ -61,8 +58,9 @@ export function App() {
         content: "", uploadedAt: new Date(), lastModified: new Date(file.lastModified),
       };
       await db.files.add(newFile);
+      await searchService.indexFile(newFile); // Index by name immediately
       newFiles.push(newFile);
-      fileProcessorWorker.postMessage({ file, fileId });
+      fileProcessorWorker.postMessage({ file, record: newFile });
       setProcessingStatus(prev => ({ ...prev, [fileId]: "Processing..." }));
     }
     setFiles(prev => [...prev, ...newFiles]);
@@ -92,14 +90,14 @@ export function App() {
       setFiles(allFiles);
 
       const status: Record<string, string> = {};
-      const processedFiles = allFiles.filter(file => {
-        const hasContent = !!file.content;
-        status[file.id] = hasContent ? "Processed" : "Pending";
-        return hasContent;
+      allFiles.forEach(file => {
+        if (!file.content) {
+          status[file.id] = "Processing...";
+        }
       });
       setProcessingStatus(status);
 
-      await searchService.indexAllFiles(processedFiles);
+      await searchService.indexAllFiles(allFiles); // Index all files by name
       setIsIndexing(false);
     };
     loadFilesAndBuildIndex();

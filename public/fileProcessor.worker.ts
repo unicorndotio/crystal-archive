@@ -5,19 +5,16 @@ import mammoth from "mammoth";
 
 // The worker needs to know where to find the pdf.worker.js file.
 // @ts-ignore
-pdfjsLib.GlobalWorkerOptions.workerSrc = new URL(
-  "pdfjs-dist/build/pdf.worker.mjs",
-  import.meta.url
-).toString();
+pdfjsLib.GlobalWorkerOptions.workerSrc = `https://cdn.jsdelivr.net/npm/pdfjs-dist@5.4.54/build/pdf.worker.mjs`;
 
 self.onmessage = async (e) => {
-  const { file, fileId } = e.data;
+  const { file, record } = e.data;
 
   try {
     let extractedText = "";
     const fileData = await file.arrayBuffer();
 
-    switch (file.type) {
+    switch (record.type) {
       case "text/plain":
         extractedText = new TextDecoder().decode(fileData);
         break;
@@ -41,13 +38,13 @@ self.onmessage = async (e) => {
 
     self.postMessage({
       type: "processed",
-      fileId,
+      file: record,
       content: extractedText,
     });
   } catch (error: any) {
     self.postMessage({
       type: "error",
-      fileId,
+      file: record,
       error: error.message,
     });
   }

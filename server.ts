@@ -6,6 +6,20 @@ const server = serve({
     // Serve index.html for all unmatched routes.
     "/*": index,
 
+    "/fileProcessor.worker.ts": async (req) => {
+      const build = await Bun.build({
+        entrypoints: ["./public/fileProcessor.worker.ts"],
+        target: "browser",
+        minify: true,
+      });
+      const file = build.outputs[0];
+      return new Response(file, {
+        headers: {
+          "Content-Type": "application/javascript",
+        },
+      });
+    },
+
     "/api/hello": {
       async GET(req) {
         return Response.json({
