@@ -21,6 +21,7 @@ export function FileUpload({ onFileUpload, children }: FileUploadProps) {
         ref={fileInputRef}
         onChange={onFileUpload}
         style={{ display: 'none' }}
+        accept=".txt, .pdf, .docx, .doc, text/plain, application/pdf, application/vnd.openxmlformats-officedocument.wordprocessingml.document"
       />
     </div>
   );

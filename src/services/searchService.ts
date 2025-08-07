@@ -25,6 +25,7 @@ class LocalSearchService {
   }
 
   async indexAllFiles(files: FileRecord[]) {
+    this.searchEngine.removeAll();
     await this.searchEngine.addAllAsync(files);
   }
 

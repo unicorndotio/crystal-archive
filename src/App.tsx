@@ -91,7 +91,9 @@ export function App() {
 
       const status: Record<string, string> = {};
       allFiles.forEach(file => {
-        if (!file.content) {
+        if (file.content) {
+          status[file.id] = "Processed";
+        } else {
           status[file.id] = "Processing...";
         }
       });
