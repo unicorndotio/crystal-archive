@@ -6,6 +6,7 @@ import { Header } from "./components/Header";
 import { Welcome } from "./components/Welcome";
 import { SearchBar } from "./components/SearchBar";
 import { SearchResults } from "./components/SearchResults";
+import { OfflineIndicator } from "./components/OfflineIndicator";
 import "./index.css";
 
 const fileProcessorWorker = new Worker("/fileProcessor.worker.ts", { type: "module" });
@@ -14,6 +15,7 @@ export function App() {
   const [files, setFiles] = useState<FileRecord[]>([]);
   const [processingStatus, setProcessingStatus] = useState<Record<string, string>>({});
   const [isIndexing, setIsIndexing] = useState(true);
+  const [isOnline, setIsOnline] = useState(navigator.onLine);
 
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
@@ -105,6 +107,19 @@ export function App() {
     loadFilesAndBuildIndex();
   }, []);
 
+  useEffect(() => {
+    const handleOnline = () => setIsOnline(true);
+    const handleOffline = () => setIsOnline(false);
+
+    window.addEventListener('online', handleOnline);
+    window.addEventListener('offline', handleOffline);
+
+    return () => {
+      window.removeEventListener('online', handleOnline);
+      window.removeEventListener('offline', handleOffline);
+    };
+  }, []);
+
   const displayedFiles = searchQuery ? searchResults.map(r => files.find(f => f.id === r.id)).filter(Boolean) as FileRecord[] : files;
 
   return (
@@ -123,6 +138,7 @@ export function App() {
           />
         )}
         <SearchBar searchQuery={searchQuery} isIndexing={isIndexing} onSearch={handleSearch} />
+        {!isOnline && <OfflineIndicator />}
       </div>
     </div>
   );
