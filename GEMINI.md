@@ -43,14 +43,18 @@ File Search application, based on the Product Requirements Document
 - [x] Develop `SearchBar` component
 - [x] Develop `SearchResults` component
 - [x] Develop `PrivacyStatus` component
+- [x] Display content snippets in search results
+- [x] Implement content snippet extraction logic
 
 ### PWA Features
 
 - [x] Implement Service Worker for offline capability
 - [x] Add PWA manifest for installable experience
 - [x] Implement offline indicator
+- [x] Implement `FileViewer` component to display full file content
+- [x] Integrate `FileViewer` to show content on file selection
 
-## Advanced Features
+## Future Enhancements
 
 ### Enhanced Privacy Features
 

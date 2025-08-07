@@ -8,6 +8,7 @@ interface SearchResultsProps {
   displayedFiles: FileRecord[];
   processingStatus: Record<string, string>;
   onDeleteFile: (fileId: string) => void;
+  onFileClick: (file: FileRecord) => void;
 }
 
 const getFileIcon = (fileType: string) => {
@@ -61,7 +62,7 @@ const getStatusInfo = (status: string) => {
     }
 };
 
-export function SearchResults({ searchQuery, searchResults, displayedFiles, processingStatus, onDeleteFile }: SearchResultsProps) {
+export function SearchResults({ searchQuery, searchResults, displayedFiles, processingStatus, onDeleteFile, onFileClick }: SearchResultsProps) {
   return (
     <div className="rounded-3xl p-[2px] bg-gradient-to-b from-white/20 to-white/5 shadow-2xl">
       <main className="w-full h-full rounded-[1.4rem] bg-white/10 backdrop-blur-xl p-6 sm:p-8">
@@ -73,12 +74,15 @@ export function SearchResults({ searchQuery, searchResults, displayedFiles, proc
             const terms = result?.terms || [];
 
             return (
-              <div key={file.id} className="bg-black/10 p-4 rounded-xl flex items-center justify-between hover:bg-black/20 transition-colors duration-200">
+              <div key={file.id} className="bg-black/10 p-4 rounded-xl flex items-center justify-between hover:bg-black/20 transition-colors duration-200 cursor-pointer" onClick={() => onFileClick(file)}>
                 <div className="flex items-center space-x-4">
                   {getFileIcon(file.type)}
                   <div>
                     <p className="font-semibold text-white" dangerouslySetInnerHTML={{ __html: searchService.highlight(file.name, terms) }}></p>
                     <p className="text-sm text-gray-400">{formatFileSize(file.size)}</p>
+                    {searchQuery && file.content && (
+                      <p className="text-sm text-gray-300 mt-1 line-clamp-2" dangerouslySetInnerHTML={{ __html: searchService.highlight(file.content.substring(0, 200), terms) }}></p>
+                    )}
                   </div>
                 </div>
                 <div className="flex items-center space-x-4">

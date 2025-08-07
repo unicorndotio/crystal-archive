@@ -6,6 +6,7 @@ import { Header } from "./components/Header";
 import { Welcome } from "./components/Welcome";
 import { SearchBar } from "./components/SearchBar";
 import { SearchResults } from "./components/SearchResults";
+import { FileViewer } from "./components/FileViewer";
 import { OfflineIndicator } from "./components/OfflineIndicator";
 import "./index.css";
 
@@ -19,6 +20,7 @@ export function App() {
 
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
+  const [selectedFile, setSelectedFile] = useState<FileRecord | null>(null);
 
   const updateFileInStateAndIndex = useCallback(async (file: FileRecord) => {
     setFiles(prevFiles => prevFiles.map(f => (f.id === file.id ? file : f)));
@@ -135,10 +137,12 @@ export function App() {
             displayedFiles={displayedFiles}
             processingStatus={processingStatus}
             onDeleteFile={handleDeleteFile}
+            onFileClick={setSelectedFile}
           />
         )}
         <SearchBar searchQuery={searchQuery} isIndexing={isIndexing} onSearch={handleSearch} />
         {!isOnline && <OfflineIndicator />}
+        <FileViewer file={selectedFile} searchQuery={searchQuery} onClose={() => setSelectedFile(null)} />
       </div>
     </div>
   );

@@ -7,7 +7,7 @@ class LocalSearchService {
   constructor() {
     this.searchEngine = new MiniSearch<FileRecord>({
       fields: ['name', 'content'], // fields to index
-      storeFields: ['id', 'name', 'type', 'uploadedAt', 'size'], // fields to return
+      storeFields: ['id', 'name', 'type', 'uploadedAt', 'size', 'content'], // fields to return
       searchOptions: {
         boost: { name: 2 }, // boost filename matches
         fuzzy: 0.2, // allow typos
