@@ -46,9 +46,9 @@ File Search application, based on the Product Requirements Document
 
 ### PWA Features
 
-- [ ] Implement Service Worker for offline capability
-- [ ] Add PWA manifest for installable experience
-- [ ] Implement offline indicator
+- [x] Implement Service Worker for offline capability
+- [x] Add PWA manifest for installable experience
+- [x] Implement offline indicator
 
 ## Advanced Features
 
