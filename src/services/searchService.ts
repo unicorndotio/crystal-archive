@@ -1,6 +1,8 @@
 import MiniSearch from 'minisearch';
 import { type FileRecord } from './database';
 
+export { type FileRecord } from './database';
+
 class LocalSearchService {
   private searchEngine: MiniSearch<FileRecord>;
 

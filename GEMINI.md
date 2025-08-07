@@ -54,6 +54,14 @@ File Search application, based on the Product Requirements Document
 - [x] Implement `FileViewer` component to display full file content
 - [x] Integrate `FileViewer` to show content on file selection
 
+### Testing
+
+- [x] Write unit tests for `database.ts` to ensure data integrity
+- [x] Write unit tests for `searchService.ts` to verify search accuracy
+- [x] Write integration tests for `fileProcessor.worker.ts` to validate text extraction
+- [x] Write component tests for `FileUpload.tsx` and `SearchBar.tsx`
+- [x] Configure and run tests with `bun test`
+
 ## Future Enhancements
 
 ### Enhanced Privacy Features

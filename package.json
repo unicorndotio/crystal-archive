@@ -19,9 +19,14 @@
     "tailwindcss": "^4.1.11"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^6.6.4",
+    "@testing-library/react": "^16.3.0",
+    "@types/bun": "latest",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "@types/bun": "latest"
+    "dommatrix": "^1.0.3",
+    "fake-indexeddb": "^6.0.1",
+    "jsdom": "^26.1.0"
   },
   "module": "src/index.tsx",
   "peerDependencies": {
